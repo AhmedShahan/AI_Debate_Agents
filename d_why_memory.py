@@ -1,3 +1,4 @@
+from curses import flash
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAI
 from dotenv import load_dotenv
 import os
@@ -7,10 +8,14 @@ load_dotenv()  # Load the API key
 # Initialize the Gemini model using LangChain
 # Initialize the Gemini model using LangChain
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-pro",
+    model="gemini-1.5-flash",
     temperature=0.5
 )
-
+import time
 # Ask a question
-response = llm.invoke("Write a short story about a cat in a futuristic city.")
-print(response.content)
+while True:
+    query=input("Enter Your Query: ")
+    if query.lower() in ["exit","quite"]:
+        break
+    response = llm.invoke(query)
+    print(response.content)
